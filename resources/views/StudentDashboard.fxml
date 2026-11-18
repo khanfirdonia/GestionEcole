@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.StudentDashboardController"
+            stylesheets="@../css/styles.css,@../css/colors.css"
+            styleClass="app-shell">
+
+    <top>
+        <HBox spacing="12" styleClass="app-topbar">
+            <Label text="Dashboard Élève" styleClass="topbar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" styleClass="topbar-subtitle"/>
+            <ToggleButton fx:id="themeToggle" text="Sombre" styleClass="theme-toggle"/>
+            <Button text="Déconnexion" styleClass="button,danger" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="0" styleClass="app-sidebar" prefWidth="220">
+            <Label text="Espace eleve" styleClass="sidebar-brand"/>
+            <Button text="Bulletins" styleClass="sidebar-item" onAction="#handleShowBulletins"/>
+            <Button text="Infos eleve / Parent" styleClass="sidebar-item" onAction="#handleClassDetails"/>
+            <Region VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
+            <VBox spacing="12" styleClass="content">
+
+                <VBox styleClass="dashboard-card,hero-card" spacing="12">
+                    <Label text="Mon espace eleve" styleClass="hero-title"/>
+                    <Label text="Consultez vos informations, vos bulletins et exportez vos resultats." styleClass="hero-subtitle"/>
+                    <GridPane hgap="20" vgap="12" style="-fx-padding: 12px;">
+                        <Label text="Nom:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label fx:id="nameLabel" styleClass="field-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Classe:" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <Label fx:id="classLabel" styleClass="field-value" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="Niveau:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label fx:id="levelLabel" styleClass="field-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <Label text="Statut:" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <Label fx:id="statusLabel" styleClass="badge" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    </GridPane>
+                </VBox>
+
+                <VBox styleClass="dashboard-card" spacing="12">
+                    <Label text="Consulter mes Bulletins" styleClass="section-title"/>
+                    <HBox spacing="12" styleClass="filter-row">
+                        <Label text="Annee scolaire:" styleClass="field-label"/>
+                        <ComboBox fx:id="schoolYearCombo" prefWidth="150" onAction="#handleLoadBulletin"/>
+
+                        <Label text="Trimestre:" styleClass="field-label"/>
+                        <ComboBox fx:id="trimesterCombo" prefWidth="240" minWidth="190" HBox.hgrow="ALWAYS" onAction="#handleLoadBulletin"/>
+                        <Button text="Exporter" styleClass="button,secondary" onAction="#handleExportBulletin"/>
+                    </HBox>
+                </VBox>
+
+                <VBox fx:id="bulletinContainer" styleClass="dashboard-card" spacing="12"/>
+
+                <TableView fx:id="gradesTableView" visible="false" managed="false"/>
+
+                <HBox spacing="20">
+                    <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Moyenne Générale" styleClass="stat-label"/>
+                        <Label fx:id="averageLabel" text="0.00" styleClass="stat-number"/>
+                    </VBox>
+                    <VBox styleClass="stat-box,accent2" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Classement" styleClass="stat-label"/>
+                        <Label fx:id="rankLabel" text="N/A" styleClass="stat-number"/>
+                    </VBox>
+                    <VBox styleClass="stat-box,success" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Appréciation" styleClass="stat-label"/>
+                        <Label fx:id="appreciationLabel" text="N/A" styleClass="stat-number"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

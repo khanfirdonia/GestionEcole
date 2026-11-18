@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.TeacherDashboardController"
+            stylesheets="@../css/styles.css,@../css/colors.css"
+            styleClass="app-shell">
+
+    <top>
+        <HBox spacing="12" styleClass="app-topbar">
+            <Label text="Dashboard Enseignant" styleClass="topbar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" styleClass="topbar-subtitle"/>
+            <ToggleButton fx:id="themeToggle" text="Sombre" styleClass="theme-toggle"/>
+            <Button text="Déconnexion" styleClass="button,danger" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="teacherTabPane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab fx:id="classesTab" text="Mes classes">
+                    <content>
+                        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+                            <VBox spacing="12" styleClass="content">
+                                <VBox styleClass="dashboard-card,hero-card" spacing="6">
+                                    <Label text="Espace enseignant" styleClass="hero-title"/>
+                                    <Label text="Consultez vos classes, saisissez les notes et suivez les bulletins." styleClass="hero-subtitle"/>
+                                </VBox>
+                                <VBox styleClass="dashboard-card" spacing="12">
+                                    <Label text="Mes Classes" styleClass="section-title"/>
+                                    <TableView fx:id="classesTableView" VBox.vgrow="ALWAYS" prefHeight="420">
+                                        <columns>
+                                            <TableColumn text="Classe" prefWidth="120"/>
+                                            <TableColumn text="Niveau" prefWidth="140"/>
+                                            <TableColumn text="Eleves" prefWidth="100"/>
+                                            <TableColumn text="Capacite" prefWidth="110"/>
+                                            <TableColumn text="Taux" prefWidth="120"/>
+                                            <TableColumn text="Matieres enseignees" prefWidth="260"/>
+                                        </columns>
+                                    </TableView>
+                                </VBox>
+                            </VBox>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+
+                <Tab fx:id="gradeEntryTab" text="Saisir des Notes">
+                    <content>
+                        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+                            <VBox spacing="12" styleClass="content">
+                                <VBox styleClass="dashboard-card" spacing="12">
+                                    <Label text="Saisir des Notes" styleClass="section-title"/>
+
+                                    <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 0 12 0 12;">
+                                        <Label text="Enseignant connecte:" styleClass="field-label"/>
+                                        <Label fx:id="entryTeacherLabel" text="N/A" styleClass="badge,info"/>
+                                    </HBox>
+
+                                    <GridPane hgap="12" vgap="12" styleClass="document-grid">
+                                        <Label text="Annee:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                        <ComboBox fx:id="schoolYearCombo" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="180"/>
+
+                                        <Label text="Niveau:" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                        <ComboBox fx:id="levelCombo" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="180"/>
+
+                                        <Label text="Classe:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                        <ComboBox fx:id="classCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="180"/>
+
+                                        <Label text="Matiere:" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                        <ComboBox fx:id="subjectCombo" GridPane.columnIndex="3" GridPane.rowIndex="1" prefWidth="180"/>
+
+                                        <Label text="Trimestre:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                        <ComboBox fx:id="trimesterCombo" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="220"/>
+
+                                        <Button fx:id="loadGradesButton" text="Charger" styleClass="button,primary" GridPane.columnIndex="3" GridPane.rowIndex="2" onAction="#handleLoadGrades"/>
+                                    </GridPane>
+
+                                    <Label fx:id="gradeEntryFeedbackLabel" text="" style="-fx-padding: 0 12 0 12;"/>
+
+                                    <TableView fx:id="gradesTableView" VBox.vgrow="ALWAYS" prefHeight="320" editable="true">
+                                        <columns>
+                                            <TableColumn text="Eleve" prefWidth="220"/>
+                                            <TableColumn text="Note" prefWidth="100"/>
+                                            <TableColumn text="Enseignant" prefWidth="220"/>
+                                            <TableColumn text="Remarque automatique" prefWidth="260"/>
+                                        </columns>
+                                    </TableView>
+
+                                    <HBox spacing="12">
+                                        <Button fx:id="saveGradesButton" text="Enregistrer" styleClass="button,success" onAction="#handleSaveGrades"/>
+                                        <Button fx:id="cancelGradesButton" text="Annuler" styleClass="button,secondary" onAction="#handleCancelGrades"/>
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+
+                <Tab fx:id="consultationTab" text="Consulter Notes">
+                    <content>
+                        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+                            <VBox spacing="12" styleClass="content">
+                                <VBox styleClass="dashboard-card" spacing="12">
+                                    <Label text="Consultation des Bulletins" styleClass="section-title"/>
+
+                                    <GridPane hgap="12" vgap="12" styleClass="document-grid">
+                                        <Label text="Annee:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                        <ComboBox fx:id="consultationSchoolYearCombo" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="180"/>
+
+                                        <Label text="Classe:" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                        <ComboBox fx:id="consultationClassCombo" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="180"/>
+
+                                        <Label text="Trimestre:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                        <ComboBox fx:id="consultationTrimesterCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="220"/>
+
+                                        <Button text="Charger" styleClass="button,primary" GridPane.columnIndex="3" GridPane.rowIndex="1" onAction="#handleLoadBulletins"/>
+                                    </GridPane>
+
+                                    <TableView fx:id="bulletinsTableView" VBox.vgrow="ALWAYS" prefHeight="260">
+                                        <columns>
+                                            <TableColumn text="Eleve" prefWidth="220"/>
+                                            <TableColumn text="Moyenne generale" prefWidth="150"/>
+                                            <TableColumn text="Rang" prefWidth="100"/>
+                                            <TableColumn text="Appreciation" prefWidth="220"/>
+                                        </columns>
+                                    </TableView>
+                                </VBox>
+
+                                <VBox styleClass="dashboard-card" spacing="12">
+                                    <Label text="Aperçu du Bulletin" styleClass="section-title"/>
+                                    <VBox fx:id="bulletinPreviewContainer" spacing="10"/>
+                                </VBox>
+                            </VBox>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

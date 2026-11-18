@@ -1,0 +1,66 @@
+# Compilation et fichiers generes Java
+/bin/
+/out/
+/out_*/
+/target/
+/build/
+/dist/
+*.class
+*.log
+*.log.*
+hs_err_pid*
+replay_pid*
+
+# Dependances installees : conserver les manifestes et fichiers de verrouillage
+/lib/*.jar
+/lib/**/*.jar
+node_modules/
+.gradle/
+.m2/
+.kotlin/
+__pycache__/
+*.pyc
+
+# Configuration locale, secrets et cles privees
+.env
+.env.*
+!.env.example
+*.local.properties
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+credentials.json
+service-account*.json
+
+# IDE et assistants locaux
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+.vscode/
+.junie/
+*.launch
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# Rapports de preparation, caches et fichiers temporaires
+/.publication/
+.cache/
+*.tmp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini

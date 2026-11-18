@@ -1,0 +1,196 @@
+@startuml
+title Diagramme de classes - School Management System (Updated)
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+
+class User {
+  +id: int
+  +username: string
+  +password: string
+  +role: string
+  +firstName: string
+  +lastName: string
+  +email: string
+  +phone: string
+  +isActive: boolean
+  +createdAt: LocalDateTime
+  +updatedAt: LocalDateTime
+}
+
+class Student {
+  +id: int
+  +user: User
+  +schoolClass: SchoolClass
+  +level: Level
+  +matricule: string
+  +parentName: string
+  +parentPhone: string
+  +parentEmail: string
+  +address: string
+  +birthDate: string
+  +status: string
+  +isActive: boolean
+}
+
+class Teacher {
+  +id: int
+  +user: User
+  +matricule: string
+  +specialization: string
+  +qualifications: string
+  +department: string
+  +phone: string
+  +email: string
+  +isActive: boolean
+}
+
+class Level {
+  +id: int
+  +name: string
+  +number: int
+  +description: string
+}
+
+class SchoolClass {
+  +id: int
+  +name: string
+  +level: Level
+  +teacher: Teacher
+  +capacity: int
+  +currentStudents: int
+  +isActive: boolean
+  +taughtSubjects: string
+}
+
+class Subject {
+  +id: int
+  +name: string
+  +code: string
+  +coefficient: int
+  +minLevel: int
+  +maxLevel: int
+  +description: string
+  +isActive: boolean
+}
+
+class SchoolYear {
+  +id: int
+  +label: string
+  +startYear: int
+  +endYear: int
+  +startDate: string
+  +endDate: string
+  +isActive: boolean
+}
+
+class Trimester {
+  +id: int
+  +name: string
+  +number: int
+  +startDate: string
+  +endDate: string
+  +description: string
+}
+
+class Inscription {
+  +id: int
+  +student: Student
+  +schoolYear: SchoolYear
+  +level: Level
+  +schoolClass: SchoolClass
+  +status: string
+}
+
+class AffectationEnseignant {
+  +id: int
+  +dateCreation: date
+}
+
+class Grade {
+  +id: int
+  +student: Student
+  +subject: Subject
+  +teacher: Teacher
+  +schoolYear: SchoolYear
+  +trimester: Trimester
+  +value: double
+  +remarks: string
+  +recordedDate: string
+  +isValidated: boolean
+}
+
+class Bulletin {
+  +id: int
+  +student: Student
+  +schoolYear: SchoolYear
+  +trimester: Trimester
+  +grades: List<Grade>
+  +average: double
+  +rank: int
+  +appreciation: string
+  +teacherComment: string
+  +parentsComment: string
+  +recordedDate: string
+  +isFinalized: boolean
+}
+class PreEnrollment {
+  +id: int
+  +schoolYear: SchoolYear
+  +requestedLevel: Level
+  +firstName: string
+  +lastName: string
+  +birthDate: string
+  +address: string
+  +parentName: string
+  +parentPhone: string
+  +parentEmail: string
+  +status: string
+}
+
+class JournalAudit {
+  +id: int
+  +nomUtilisateur: string
+  +typeAction: string
+  +details: string
+  +dateAction: date
+}
+
+
+Student "1" -- "1" User : has
+Teacher "1" -- "1" User : has
+Student "*" -- "0..1" SchoolClass : assigned to
+Student "*" -- "0..1" Level : current level
+SchoolClass "*" -- "1" Level : for level
+SchoolClass "*" -- "1" Teacher : main teacher
+Inscription "*" -- "1" Student : for
+Inscription "*" -- "1" SchoolYear : for
+Inscription "*" -- "1" Level : for
+Inscription "*" -- "0..1" SchoolClass : for
+Grade "*" -- "1" Student : for
+Grade "*" -- "1" Subject : for
+Grade "*" -- "1" Teacher : given by
+Grade "*" -- "1" SchoolYear : for
+Grade "*" -- "1" Trimester : for
+Bulletin "*" -- "1" Student : for
+Bulletin "*" -- "1" SchoolYear : for
+Bulletin "*" -- "1" Trimester : for
+Bulletin "1" -- "*" Grade : contains
+PreEnrollment "*" -- "1" SchoolYear : for
+PreEnrollment "*" -- "1" Level : requested
+
+
+note right of Inscription
+  Contrainte:
+  Un élève ne peut avoir
+  qu'une inscription par année scolaire
+  et dans un seul niveau.
+end note
+
+note right of SchoolClass
+  Contrainte:
+  Capacité maximale configurable.
+end note
+
+@enduml

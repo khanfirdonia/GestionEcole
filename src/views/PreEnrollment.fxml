@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.PreEnrollmentController"
+            stylesheets="@../css/styles.css,@../css/colors.css"
+            styleClass="app-shell">
+
+    <top>
+        <HBox spacing="12" styleClass="app-topbar">
+            <Label text="Pre-inscription" styleClass="topbar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ToggleButton fx:id="themeToggle" text="Sombre" styleClass="theme-toggle"/>
+            <Button text="Retour" styleClass="button,secondary" onAction="#handleBack"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="12" styleClass="content">
+                <VBox styleClass="dashboard-card,hero-card" spacing="6">
+                    <Label text="Demande de pre-inscription" styleClass="hero-title"/>
+                    <Label text="Remplissez le formulaire, puis attendez la validation de l'administration." styleClass="hero-subtitle"/>
+                </VBox>
+
+                <VBox styleClass="dashboard-card" spacing="12">
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-row">
+                        <Label text="Annee scolaire active:" styleClass="field-label"/>
+                        <Label fx:id="activeYearLabel" text="N/A" styleClass="field-value"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                    </HBox>
+
+                    <GridPane hgap="12" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                        </columnConstraints>
+
+                        <Label text="Prenom*" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="firstNameField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        <Label text="Nom*" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <TextField fx:id="lastNameField" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="Date naissance" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <DatePicker fx:id="birthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Niveau demande*" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="requestedLevelCombo" prefWidth="220" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <Label text="Adresse" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <TextField fx:id="addressField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+
+                        <Label text="Nom parent" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <TextField fx:id="parentNameField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <Label text="Tel parent" styleClass="field-label" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                        <TextField fx:id="parentPhoneField" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+
+                        <Label text="Email parent" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                        <TextField fx:id="parentEmailField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                    </GridPane>
+
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button text="Envoyer la demande" styleClass="button,primary" onAction="#handleSubmit"/>
+                        <Label fx:id="feedbackLabel" text="" styleClass="muted"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

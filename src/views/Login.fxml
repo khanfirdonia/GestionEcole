@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.LoginController"
+      alignment="TOP_CENTER"
+      spacing="12"
+      styleClass="login-root"
+      prefWidth="500"
+      prefHeight="620"
+      >
+    <children>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <ToggleButton fx:id="themeToggle" text="Sombre" styleClass="theme-toggle"/>
+            </children>
+        </HBox>
+
+        <Label text="Gestion scolaire" styleClass="hero-title"/>
+        <Label text="Connexion securisee a votre espace" styleClass="hero-subtitle"/>
+
+        <VBox spacing="10"
+              alignment="CENTER_LEFT"
+              styleClass="login-box,hero-card">
+            <Label text="Nom d'utilisateur" styleClass="field-label"/>
+            <TextField fx:id="usernameField"
+                       promptText="Entrez votre nom d'utilisateur"
+                       styleClass="text-field" />
+
+            <Label text="Mot de passe" styleClass="field-label"/>
+            <PasswordField fx:id="passwordField"
+                           promptText="Entrez votre mot de passe"
+                           styleClass="password-field" />
+
+            <HBox spacing="12">
+                <Button fx:id="loginButton"
+                        text="Se connecter"
+                        onAction="#handleLogin"
+                        styleClass="button,primary" />
+                <Button text="Pre-inscription"
+                        onAction="#handlePreEnrollment"
+                        styleClass="button,secondary" />
+                <Button fx:id="exitButton"
+                        text="Quitter"
+                        onAction="#handleExit"
+                        styleClass="button,secondary" />
+            </HBox>
+        </VBox>
+
+        <VBox spacing="10"
+              alignment="CENTER_LEFT"
+              styleClass="card,demo-card">
+            <Label text="Comptes de demonstration" styleClass="section-title"/>
+            <Label text="Copiez les identifiants ci-dessous." styleClass="muted"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Admin" minWidth="90" />
+                <TextField text="admin" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+                <TextField text="admin123" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Enseignant" minWidth="90" />
+                <TextField text="teacher01" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+                <TextField text="pass123" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Eleve" minWidth="90" />
+                <TextField text="student01" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+                <TextField text="pass123" editable="false" focusTraversable="false" styleClass="demo-field" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <Label text="Sources: database_init.sql et README.md" styleClass="muted"/>
+        </VBox>
+    </children>
+</VBox>

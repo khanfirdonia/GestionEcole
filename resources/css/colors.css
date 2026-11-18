@@ -1,0 +1,88 @@
+/* ============================================================
+   THEME TOKENS (Clair / Sombre) - JavaFX looked-up colors
+   ============================================================ */
+
+/* Tokens par defaut (clair). On les applique aussi aux DialogPane et aux containers racines. */
+.root,
+.app-shell,
+.login-root,
+.dialog-pane {
+    -app-accent: #3B82F6;
+    -app-accent-2: #14B8A6;
+
+    -app-success: #87CEEB;
+    -app-warning: #F59E0B;
+    -app-error: #EF4444;
+
+    -app-bg: #F4F7FB;
+    -app-surface: #FFFFFF;
+    -app-surface-2: #EEF4FF;
+    -app-border: #D5E0F0;
+
+    -app-text: #1F2937;
+    -app-muted: #64748B;
+
+    -app-shadow: rgba(15, 23, 42, 0.14);
+    -app-shadow-strong: rgba(15, 23, 42, 0.22);
+    -app-focus: rgba(59, 130, 246, 0.28);
+
+    /* Integration avec quelques couleurs standard JavaFX */
+    -fx-accent: -app-accent;
+    -fx-focus-color: -app-accent;
+    -fx-faint-focus-color: -app-focus;
+}
+
+/* Mode sombre: activer en ajoutant "theme-dark" sur la racine (Scene root) ou sur un DialogPane. */
+.root.theme-dark,
+.app-shell.theme-dark,
+.login-root.theme-dark,
+.dialog-pane.theme-dark {
+    -app-accent: #6B8CFF;
+    -app-accent-2: #8A77FF;
+
+    -app-success: #22C55E;
+    -app-warning: #FBBF24;
+    -app-error: #F87171;
+
+    -app-bg: #0B1220;
+    -app-surface: #101A2C;
+    -app-surface-2: #0E1728;
+    -app-border: #22324A;
+
+    -app-text: #E6ECF5;
+    -app-muted: #A8B3C7;
+
+    -app-shadow: rgba(0, 0, 0, 0.35);
+    -app-shadow-strong: rgba(0, 0, 0, 0.55);
+    -app-focus: rgba(107, 140, 255, 0.30);
+}
+
+/* ============================================================
+   Couleurs des graphiques
+   ============================================================ */
+
+.default-color0.chart-pie { -fx-pie-color: -app-accent; }
+.default-color1.chart-pie { -fx-pie-color: -app-success; }
+.default-color2.chart-pie { -fx-pie-color: -app-warning; }
+.default-color3.chart-pie { -fx-pie-color: -app-accent-2; }
+.default-color4.chart-pie { -fx-pie-color: -app-error; }
+
+.default-color0.chart-bar { -fx-bar-fill: -app-accent; }
+.default-color1.chart-bar { -fx-bar-fill: -app-accent-2; }
+.default-color2.chart-bar { -fx-bar-fill: -app-success; }
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: -app-text;
+}
+
+.axis {
+    -fx-tick-label-fill: -app-muted;
+}
+
+.axis-label {
+    -fx-text-fill: -app-muted;
+}

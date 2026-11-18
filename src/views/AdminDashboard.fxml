@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.AdminDashboardController"
+            stylesheets="@../css/styles.css,@../css/colors.css"
+            styleClass="app-shell">
+
+    <top>
+        <HBox spacing="12" styleClass="app-topbar">
+            <Label text="Dashboard Admin" styleClass="topbar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" styleClass="topbar-subtitle"/>
+            <ToggleButton fx:id="themeToggle" text="Sombre" styleClass="theme-toggle"/>
+            <Button text="Deconnexion" styleClass="button,danger" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="0" prefWidth="220" styleClass="app-sidebar">
+            <Label text="Administration" styleClass="sidebar-brand"/>
+            <Button text="Vue d'ensemble" styleClass="sidebar-item" onAction="#handleNavOverview"/>
+            <Button text="Statistiques" styleClass="sidebar-item" onAction="#handleNavCharts"/>
+            <Button text="Eleves" styleClass="sidebar-item" onAction="#handleNavStudents"/>
+            <Button text="Enseignants" styleClass="sidebar-item" onAction="#handleNavTeachers"/>
+            <Button text="Inscriptions" styleClass="sidebar-item" onAction="#handleNavPending"/>
+            <Region VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fx:id="contentScrollPane" fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="12" styleClass="content">
+                <VBox styleClass="dashboard-card,hero-card" spacing="6">
+                    <Label text="Pilotage de l'ecole" styleClass="hero-title"/>
+                    <Label text="Suivi des eleves, des enseignants, des classes et des inscriptions." styleClass="hero-subtitle"/>
+                </VBox>
+
+                <HBox fx:id="statsSection" spacing="12">
+                    <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Total eleves" styleClass="stat-label"/>
+                        <Label fx:id="studentCountLabel" text="0" styleClass="stat-number"/>
+                    </VBox>
+                    <VBox styleClass="stat-box,accent2" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Total enseignants" styleClass="stat-label"/>
+                        <Label fx:id="teacherCountLabel" text="0" styleClass="stat-number"/>
+                    </VBox>
+                    <VBox styleClass="stat-box,success" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Total classes" styleClass="stat-label"/>
+                        <Label fx:id="classCountLabel" text="0" styleClass="stat-number"/>
+                    </VBox>
+                    <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="8">
+                        <Text text="Liste d'attente" styleClass="stat-label"/>
+                        <Label fx:id="pendingCountLabel" text="0" styleClass="stat-number"/>
+                    </VBox>
+                </HBox>
+
+                <HBox fx:id="chartsSection" spacing="12">
+                    <VBox styleClass="dashboard-chart" HBox.hgrow="ALWAYS">
+                        <Label text="Eleves par niveau" styleClass="section-title"/>
+                        <BarChart fx:id="studentsByLevelChart" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+                    <VBox styleClass="dashboard-chart" HBox.hgrow="ALWAYS">
+                        <Label text="Taux de remplissage par niveau (%)" styleClass="section-title"/>
+                        <BarChart fx:id="classesByLevelChart" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+                </HBox>
+
+                <VBox fx:id="pendingSection" styleClass="dashboard-card" spacing="12">
+                    <Label text="Liste d'attente des eleves" styleClass="section-title"/>
+
+                    <Label text="Pre-inscriptions en attente (sans compte)" styleClass="section-title"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button fx:id="approvePreEnrollmentButton" text="Valider pre-inscription" styleClass="button,success" onAction="#handleApprovePreEnrollment"/>
+                        <Button fx:id="rejectPreEnrollmentButton" text="Refuser pre-inscription" styleClass="button,danger" onAction="#handleRejectPreEnrollment"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <TableView fx:id="preEnrollmentsTableView" prefHeight="220" minHeight="180">
+                        <columns>
+                            <TableColumn fx:id="preEnrollmentNameColumn" text="Eleve" prefWidth="240"/>
+                            <TableColumn fx:id="preEnrollmentLevelColumn" text="Niveau" prefWidth="160"/>
+                            <TableColumn fx:id="preEnrollmentBirthColumn" text="Naissance" prefWidth="130"/>
+                            <TableColumn fx:id="preEnrollmentParentPhoneColumn" text="Tel parent" prefWidth="140"/>
+                        </columns>
+                    </TableView>
+
+                    <Label text="Inscriptions eleves en liste d'attente" styleClass="section-title"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-row">
+                        <TextField fx:id="pendingSearchField" promptText="Rechercher par nom..." HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="pendingLevelFilterCombo" prefWidth="200"/>
+                        <Button text="Sync inscriptions" styleClass="button,secondary" onAction="#handleSyncInscriptions"/>
+                        <Button text="Generer classes" styleClass="button,secondary" onAction="#handleGenerateClasses"/>
+                    </HBox>
+                    <ListView fx:id="pendingStudentsListView" prefHeight="200" minHeight="200"/>
+                    <Label text="Decisions d'inscription" styleClass="section-title"/>
+                    <HBox spacing="12">
+                        <Button fx:id="approveButton" text="Approuver" styleClass="button,success" onAction="#handleApproveStudent"/>
+                        <Button fx:id="rejectButton" text="Refuser" styleClass="button,danger" onAction="#handleRejectStudent"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Trier par:" styleClass="muted"/>
+                        <ComboBox fx:id="approvalSortCombo" prefWidth="160"/>
+                    </HBox>
+                    <TableView fx:id="approvalsTableView" prefHeight="220" minHeight="180">
+                        <columns>
+                            <TableColumn fx:id="approvalNameColumn" text="Eleve" prefWidth="260"/>
+                            <TableColumn fx:id="approvalLevelColumn" text="Niveau" prefWidth="160"/>
+                            <TableColumn fx:id="approvalStatusColumn" text="Statut" prefWidth="160"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox fx:id="studentsSection" styleClass="dashboard-card" spacing="12">
+                    <Label text="Gestion des eleves" styleClass="section-title"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-row">
+                        <TextField fx:id="studentsSearchField" promptText="Rechercher par nom, matricule, username..." HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="studentsLevelFilterCombo" prefWidth="200"/>
+                        <ComboBox fx:id="studentsClassFilterCombo" prefWidth="220"/>
+                        <Button fx:id="addStudentButton" text="Ajouter" styleClass="button,primary" onAction="#handleAddStudent"/>
+                        <Button fx:id="editStudentButton" text="Modifier" styleClass="button,secondary" onAction="#handleEditStudent"/>
+                        <Button fx:id="deleteStudentButton" text="Supprimer" styleClass="button,danger" onAction="#handleDeleteStudent"/>
+                    </HBox>
+                    <TableView fx:id="studentsTableView" prefHeight="280" minHeight="220">
+                        <columns>
+                            <TableColumn fx:id="studentNameColumn" text="Eleve" prefWidth="240"/>
+                            <TableColumn fx:id="studentUsernameColumn" text="Username" prefWidth="160"/>
+                            <TableColumn fx:id="studentMatriculeColumn" text="Matricule" prefWidth="140"/>
+                            <TableColumn fx:id="studentLevelColumn" text="Niveau" prefWidth="140"/>
+                            <TableColumn fx:id="studentClassColumn" text="Classe" prefWidth="140"/>
+                            <TableColumn fx:id="studentStatusColumn" text="Statut" prefWidth="140"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox fx:id="teachersSection" styleClass="dashboard-card" spacing="12">
+                    <Label text="Gestion des enseignants" styleClass="section-title"/>
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-row">
+                        <TextField fx:id="teachersSearchField" promptText="Rechercher par nom, code, username..." HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="addTeacherButton" text="Ajouter" styleClass="button,primary" onAction="#handleAddTeacher"/>
+                        <Button fx:id="editTeacherButton" text="Modifier" styleClass="button,secondary" onAction="#handleEditTeacher"/>
+                        <Button fx:id="assignTeacherButton" text="Affecter classes / matieres" styleClass="button,secondary" onAction="#handleAssignTeacher"/>
+                    </HBox>
+                    <TableView fx:id="teachersTableView" prefHeight="280" minHeight="220">
+                        <columns>
+                            <TableColumn fx:id="teacherNameColumn" text="Enseignant" prefWidth="220"/>
+                            <TableColumn fx:id="teacherUsernameColumn" text="Username" prefWidth="150"/>
+                            <TableColumn fx:id="teacherMatriculeColumn" text="Code" prefWidth="120"/>
+                            <TableColumn fx:id="teacherPhoneColumn" text="Telephone" prefWidth="130"/>
+                            <TableColumn fx:id="teacherSpecializationColumn" text="Specialisation" prefWidth="170"/>
+                            <TableColumn fx:id="teacherAssignmentsColumn" text="Affectations" prefWidth="340"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
